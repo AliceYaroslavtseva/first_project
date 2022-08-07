@@ -27,9 +27,9 @@ class Training:
                  duration: float,
                  weight: float
                  ) -> None:
-                self.action = action
-                self.duration = duration
-                self.weight = weight
+        self.action = action
+        self.duration = duration
+        self.weight = weight
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -54,17 +54,17 @@ class Training:
                            self.get_spent_calories())
         return show
 
+
 class Running(Training):
     """Тренировка: бег."""
-    
 
     COEFF_CALORIE_RUN_1: float = 18
     COEFF_CALORIE_RUN_2: float = 20
 
     def get_spent_calories(self) -> float:
-         return ((self.COEFF_CALORIE_RUN_1 * self.get_mean_speed()
-                 - self.COEFF_CALORIE_RUN_2) * self.weight / self.M_IN_KM
-                 * (self.duration * self.MIN_IN_HOUR))
+        return ((self.COEFF_CALORIE_RUN_1 * self.get_mean_speed()
+                - self.COEFF_CALORIE_RUN_2) * self.weight / self.M_IN_KM
+                * (self.duration * self.MIN_IN_HOUR))
 
 
 class SportsWalking(Training):
@@ -121,7 +121,7 @@ def read_package(workout_type: str, data: list) -> Training:
 def main(training: Training) -> None:
     """Главная функция."""
     info = training.show_training_info()
-    print (info.get_message())
+    print(info.get_message())
 
 
 if __name__ == '__main__':
@@ -134,4 +134,3 @@ if __name__ == '__main__':
     for workout_type, data in packages:
         training = read_package(workout_type, data)
         main(training)
-
