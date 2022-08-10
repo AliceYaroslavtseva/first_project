@@ -14,13 +14,17 @@ class InfoMessage:
         self.distance: float = distance
         self.speed: float = speed
         self.calories: float = calories
-
+        
     def get_message(self) -> str:
-        return (f'Тип тренировки: {self.training_type}; '
-                f'Длительность: {self.duration:.3f} ч.; '
-                f'Дистанция: {self.distance:.3f} км; '
-                f'Ср. скорость: {self.speed:.3f} км/ч; '
-                f'Потрачено ккал: {self.calories:.3f}.')
+        return ('Тип тренировки: {0}; '
+                'Длительность: {1:.3f} ч.; '
+                'Дистанция: {2:.3f} км; '
+                'Ср. скорость: {3:.3f} км/ч; '
+                'Потрачено ккал: {4:.3f}.').format(self.training_type,
+                                              self.duration,
+                                              self.distance,
+                                              self.speed,
+                                              self.calories)
 
 
 class Training:
@@ -34,9 +38,9 @@ class Training:
                  duration: float,
                  weight: float
                  ) -> None:
-        self.action = action
-        self.duration = duration
-        self.weight = weight
+        self.action: int = action
+        self.duration: float = duration
+        self.weight: float = weight
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
@@ -48,7 +52,7 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
-        pass
+        raise NotImplementedError
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -75,7 +79,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     COEFF_CALORIE_WLK_1: float = 0.035
     COEFF_CALORIE_WLK_2: float = 0.029
-    TWO: float = 2
+    DEGREE: float = 2
 
     def __init__(self,
                  action: int,
@@ -88,7 +92,7 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.COEFF_CALORIE_WLK_1 * self.weight
-                + (self.get_mean_speed() ** self.TWO // self.height)
+                + (self.get_mean_speed() ** self.DEGREE // self.height)
                 * self.COEFF_CALORIE_WLK_2 * self.weight)
                 * (self.duration * self.MIN_IN_HOUR))
 
@@ -125,10 +129,9 @@ def read_package(workout_type: str, data: List[int]) -> Training:
         'RUN': Running,
         'SWM': Swimming,
         'WLK': SportsWalking}
-    try:
-        return training_type[workout_type](*data)
-    except KeyError:
-        print('Неизвестный тип тренировки')
+    if workout_type not in training_type: 
+        raise ValueError(f'Такой тренировки не существует: {workout_type}.') 
+    return training_type[workout_type](*data) 
 
 
 def main(training: Training) -> None:
@@ -142,7 +145,6 @@ if __name__ == '__main__':
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
-        ('LMP', [560, 2, 60])
     ]
 
     for workout_type, data in packages:
