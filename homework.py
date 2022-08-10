@@ -14,17 +14,17 @@ class InfoMessage:
         self.distance: float = distance
         self.speed: float = speed
         self.calories: float = calories
-        
+
     def get_message(self) -> str:
         return ('Тип тренировки: {0}; '
                 'Длительность: {1:.3f} ч.; '
                 'Дистанция: {2:.3f} км; '
                 'Ср. скорость: {3:.3f} км/ч; '
                 'Потрачено ккал: {4:.3f}.').format(self.training_type,
-                                              self.duration,
-                                              self.distance,
-                                              self.speed,
-                                              self.calories)
+                                                   self.duration,
+                                                   self.distance,
+                                                   self.speed,
+                                                   self.calories)
 
 
 class Training:
@@ -129,9 +129,9 @@ def read_package(workout_type: str, data: List[int]) -> Training:
         'RUN': Running,
         'SWM': Swimming,
         'WLK': SportsWalking}
-    if workout_type not in training_type: 
-        raise ValueError(f'Такой тренировки не существует: {workout_type}.') 
-    return training_type[workout_type](*data) 
+    if workout_type not in training_type:
+        raise ValueError(f'Такой тренировки не существует: {workout_type}.')
+    return training_type[workout_type](*data)
 
 
 def main(training: Training) -> None:
