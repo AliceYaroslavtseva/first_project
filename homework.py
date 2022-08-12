@@ -26,7 +26,7 @@ class InfoMessage:
                                    self.duration,
                                    self.distance,
                                    self.speed,
-                                   self.calories)       
+                                   self.calories)
 
 
 class Training:
