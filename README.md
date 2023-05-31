@@ -33,7 +33,7 @@ python manage.py runserver # Для Windows
 python3 manage.py runserver # Для Linux и macOS
 ```
 
-### Автор
+### Автор:
 
 Алиса Ярославцева:
 ```
